@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+
 app.use(express.json());
 
 //DB Connection
@@ -29,6 +29,13 @@ app.get("/p/:id", viewPasteHTML)
 app.use((req,res) =>{
   res.status(404).json({error: "API endpoint not found"});
 })      
+
+
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
 
 const PORT = process.env.PORT || 5000;
 
