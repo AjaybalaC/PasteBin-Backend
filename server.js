@@ -12,25 +12,6 @@ dotenv.config();
 
 const app = express();
 
-
-app.use(express.json());
-
-//DB Connection
-
-connectDB();
-
-//Routes
-app.use('/api/healthz', healthRoutes);
-app.use('/api/pastes', pasteRoutes);
-
-// ✅ HTML route 
-app.get("/p/:id", viewPasteHTML)
-
-app.use((req,res) =>{
-  res.status(404).json({error: "API endpoint not found"});
-})      
-
-
 const allowedOrigins = [
   "https://pastebin-frontend-gn7h.onrender.com"
 ];
@@ -51,6 +32,26 @@ app.use(
     allowedHeaders: ["Content-Type"],
   })
 );
+
+app.use(express.json());
+
+//DB Connection
+
+connectDB();
+
+//Routes
+app.use('/api/healthz', healthRoutes);
+app.use('/api/pastes', pasteRoutes);
+
+// ✅ HTML route 
+app.get("/p/:id", viewPasteHTML)
+
+app.use((req,res) =>{
+  res.status(404).json({error: "API endpoint not found"});
+})      
+
+
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
